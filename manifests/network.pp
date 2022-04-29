@@ -39,13 +39,12 @@ define wireguard::network (
     public => true,
   }
 
-  -> file { "/etc/wireguard/peers/${network}.conf":
+  -> file { "/etc/wireguard/${network}.conf":
     ensure  => file,
     owner   => 'root',
     group   => 'root',
     mode    => '0600',
-    content => template('wireguard/peers.conf.erb'),
-    require => File['/etc/wireguard/peers'],
+    content => template('wireguard/network.conf.erb'),
   }
 
   ~> service { "wg-quick@${network}":

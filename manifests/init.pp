@@ -9,7 +9,6 @@ class wireguard (
   -> file { [
       '/etc/wireguard/private',
       '/etc/wireguard/public',
-      '/etc/wireguard/peers',
     ]:
       ensure => directory,
       owner  => 'root',
