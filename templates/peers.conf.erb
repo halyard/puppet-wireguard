@@ -1,0 +1,18 @@
+[Interface]
+Address = <%= %>
+PrivateKey = PRIVATE_KEY
+
+<% @peers.each do |name, options| -%>
+<%   next if name == @self_name -%>
+[Peer]
+PublicKey = <%= scope.call_function('configvault_read', "wireguard/#{@network}.pub", true, name) %>
+<% address = options['allowedips'] || options['address'] -%>
+AllowedIPs = <%= address =~ /\// ? address : address + '/32' %>
+<% if options['endpoint'] -%>
+Endpoint = <%= options['endpoint'] %>
+<% end -%>
+<% if options['keepalive'] -%>
+PersistentKeepalive = <%= options['keepalive'] %>
+<% end -%>
+
+<% end -%>
