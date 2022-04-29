@@ -47,4 +47,9 @@ define wireguard::network (
     content => template('wireguard/peers.conf.erb'),
     require => File['/etc/wireguard/peers'],
   }
+
+  ~> service { "wg-quick@${network}":
+    ensure => running,
+    enable => true,
+  }
 }
