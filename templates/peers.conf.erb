@@ -1,11 +1,11 @@
 [Interface]
 Address = <%= @self['address'] %>/32
-PrivateKey = <%= scope.call_function('configvault_read', ["wireguard/#{@network}.key", false]) %>
+PrivateKey = <%= scope.call_function('configvault_read', ["wireguard/#{@network}.key", false, '']) %>
 
 <% @peers.each do |name, options| -%>
 <%   next if name == @self_name -%>
 [Peer]
-PublicKey = <%= scope.call_function('configvault_read', ["wireguard/#{@network}.pub", true, name]) %>
+PublicKey = <%= scope.call_function('configvault_read', ["wireguard/#{@network}.pub", true, '', name]) %>
 AllowedIPs = <%= options['allowedips'] || options['address'] + '/32' %>
 <% if options['endpoint'] -%>
 Endpoint = <%= options['endpoint'] %>
