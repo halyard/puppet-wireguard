@@ -10,11 +10,11 @@ class wireguard (
       '/etc/wireguard/private',
       '/etc/wireguard/public',
       '/etc/wireguard/peers',
-  ]:
-    ensure => directory,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0700',
+    ]:
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0700',
   }
 
   $networks.each |String $interface, Hash $peers| {

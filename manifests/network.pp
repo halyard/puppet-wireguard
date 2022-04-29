@@ -1,11 +1,12 @@
 # @summary Configure wireguard network
 #
 # @param peers sets the peers for the network
+# @param network sets the name of the network
 define wireguard::network (
   Hash[String, Hash] $peers = {},
   String $network = $title,
 ) {
-  $self_name = $::configvault::user
+  $self_name = $configvault::user
   $self = $peers[$self_name]
   unless $self {
     fail('Own WG peer not defined')
@@ -24,7 +25,7 @@ define wireguard::network (
   }
 
   -> exec { "Create public key for ${network}":
-    command => "/usr/bin/wg genkey < $privkey_file > $pubkey_file",
+    command => "/usr/bin/wg genkey < ${privkey_file} > ${pubkey_file}",
     creates => $pubkey_file,
     require => File['/etc/wireguard/public'],
   }
