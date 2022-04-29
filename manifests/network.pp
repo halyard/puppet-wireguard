@@ -17,7 +17,10 @@ define wireguard::network (
   exec { "Create private key for ${network}":
     command => "/usr/bin/wg genkey > ${privkey_file}",
     creates => $privkey_file,
-    require => File['/etc/wireguard/private'],
+    require => [
+      File['/etc/wireguard/private'],
+      Package['wireguard-tools'],
+    ],
   }
 
   -> exec { "Create public key for ${network}":
@@ -30,7 +33,7 @@ define wireguard::network (
     source => $privkey_file,
   }
 
-  -> Configvault_Write ( "wireguard/${network}.pub":
+  -> Configvault_Write { "wireguard/${network}.pub":
     source => $pubkey_file,
     public => true,
   }
@@ -43,6 +46,4 @@ define wireguard::network (
     content => template('wireguard/peers.conf.erb'),
     require => File['/etc/wireguard/peers'],
   }
-
-
 }

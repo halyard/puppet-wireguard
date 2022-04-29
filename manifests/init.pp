@@ -21,5 +21,5 @@ class wireguard (
     wireguard::network { $interface:
       peers => $peers,
     }
-  ]
+  }
 }
