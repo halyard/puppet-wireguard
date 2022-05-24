@@ -25,7 +25,7 @@ define wireguard::network (
   }
 
   -> exec { "Create public key for ${network}":
-    command => "/usr/bin/wg genkey < ${privkey_file} > ${pubkey_file}",
+    command => "/usr/bin/wg pubkey < ${privkey_file} > ${pubkey_file}",
     creates => $pubkey_file,
     require => File['/etc/wireguard/public'],
   }
