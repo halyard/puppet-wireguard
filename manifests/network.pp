@@ -9,7 +9,7 @@ define wireguard::network (
   $self_name = $configvault::user
   $self = $peers[$self_name]
   unless $self {
-    fail('Own WG peer not defined')
+    fail("Own WG peer not defined: ${self_name}")
   }
 
   $privkey_file = "/etc/wireguard/private/${network}"
