@@ -1,5 +1,8 @@
 [Interface]
 Address = <%= @self['address'] %>/32
+<% if @self['listenport'] -%>
+ListenPort=<%= @self['listenport'] %>
+<% end -%>
 PrivateKey = <%= scope.call_function('configvault_read', ["wireguard/#{@network}.key", false, '']) %>
 
 <% @peers.each do |name, options| -%>
