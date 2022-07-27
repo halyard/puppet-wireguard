@@ -1,0 +1,9 @@
+*nat
+:PREROUTING ACCEPT [96:4594]
+:INPUT ACCEPT [95:4530]
+:OUTPUT ACCEPT [1:313]
+:POSTROUTING ACCEPT [1:313]
+<% @routers.each do |x| -%>
+-A POSTROUTING -s <%= x %> -j MASQUERADE
+<% end -%>
+COMMIT
