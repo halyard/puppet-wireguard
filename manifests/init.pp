@@ -25,7 +25,7 @@ class wireguard (
   }
 
   if length($routers) > 0 {
-    file { '/etc/sysctl.d/wireguard':
+    file { '/etc/sysctl.d/wireguard.conf':
       ensure  => file,
       content => 'net.ipv4.ip_forward=1',
     }
