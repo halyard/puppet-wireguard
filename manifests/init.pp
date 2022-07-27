@@ -27,12 +27,17 @@ class wireguard (
   if length($routers) > 0 {
     file { '/etc/sysctl.d/wireguard':
       ensure   => file,
-      contents => 'net.ipv4.ip_forward=1',
+      content => 'net.ipv4.ip_forward=1',
     }
 
     file { '/etc/iptables/iptables.rules':
       ensure  => file,
       content => template('wireguard/iptables.rules.erb'),
+    }
+
+    ~> service { 'iptables':
+      ensure => running,
+      enable => true,
     }
   }
 }
