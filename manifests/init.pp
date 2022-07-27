@@ -30,6 +30,11 @@ class wireguard (
       content => 'net.ipv4.ip_forward=1',
     }
 
+    ~> service { 'systemd-sysctl':
+      ensure => running,
+      enable => true,
+    }
+
     file { '/etc/iptables/iptables.rules':
       ensure  => file,
       content => template('wireguard/iptables.rules.erb'),
