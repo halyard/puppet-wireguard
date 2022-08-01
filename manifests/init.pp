@@ -38,13 +38,13 @@ class wireguard (
     $routers.each |String $router| {
       firewall { "100 masquerade for wireguard routing on ${router}":
         chain  => 'POSTROUTING',
-        jump   => 'MASQUERADE',
+        action => 'MASQUERADE',
         source => $router,
         table  => 'nat',
       }
       firewall { "100 forward for wireguard routing on ${router}":
         chain  => 'FORWARD',
-        jump   => 'ACCEPT',
+        action => 'ACCEPT',
         source => $router,
       }
     }
