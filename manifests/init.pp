@@ -44,7 +44,7 @@ class wireguard (
       }
       firewall { "100 forward for wireguard routing on ${router}":
         chain  => 'FORWARD',
-        action => 'ACCEPT',
+        action => 'accept',
         source => $router,
       }
     }
