@@ -35,14 +35,13 @@ class wireguard (
       enable => true,
     }
 
-    file { '/etc/iptables/iptables.rules':
-      ensure  => file,
-      content => template('wireguard/iptables.rules.erb'),
-    }
-
-    ~> service { 'iptables':
-      ensure => running,
-      enable => true,
+    $routers.each |String $router| {
+      firewall { "100 masquerade for wireguard routing on ${router}":
+        chain    => 'POSTROUTING',
+        jump     => 'MASQUERADE',
+        source   => $router,
+        table    => 'nat',
+      }
     }
   }
 }
