@@ -39,6 +39,11 @@ define wireguard::network (
     public => true,
   }
 
+  -> firewall { "100 allow inbound wireguard for ${network}":
+    iniface => $network,
+    action  => 'accept',
+  }
+
   -> file { "/etc/wireguard/${network}.conf":
     ensure  => file,
     owner   => 'root',
