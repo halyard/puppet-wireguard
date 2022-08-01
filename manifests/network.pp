@@ -41,6 +41,7 @@ define wireguard::network (
 
   -> firewall { "100 allow inbound wireguard for ${network}":
     iniface => $network,
+    proto   => 'all',
     action  => 'accept',
   }
 
