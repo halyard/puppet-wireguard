@@ -39,7 +39,7 @@ class wireguard (
       dst_type => 'LOCAL',
       proto    => 'udp',
       dport    => $port,
-      action   => 'redirect',
+      jump     => 'REDIRECT',
       toports  => 41194,
     }
   }
