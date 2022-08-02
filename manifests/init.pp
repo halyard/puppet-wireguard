@@ -27,9 +27,9 @@ class wireguard (
   }
 
   firewall { '100 allow inbound wireguard traffic':
-    dport    => 41194,
-    proto    => 'udp',
-    action   => 'accept',
+    dport  => 41194,
+    proto  => 'udp',
+    action => 'accept',
   }
 
   $alternate_ports.each |String $port| {
