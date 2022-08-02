@@ -2,9 +2,11 @@
 #
 # @param networks sets the list of WG networks to create
 # @param routers is an optional list of subnets that the instance should route for
+# @param alternate_ports sets the extra ports that can be used for wireguard clients
 class wireguard (
   Hash[String, Hash[String, Any]] $networks = {},
   Array[String] $routers = [],
+  Array[String] $alternate_ports = [],
 ) {
   package { 'wireguard-tools': }
 
@@ -21,6 +23,24 @@ class wireguard (
   $networks.each |String $interface, Hash $peers| {
     wireguard::network { $interface:
       peers => $peers,
+    }
+  }
+
+  firewall { '100 allow inbound wireguard traffic':
+    dport    => 41194,
+    proto    => 'udp',
+    action   => 'accept',
+  }
+
+  $alternate_ports.each |String $port| {
+    firewall { "100 redirect ${port} as alternate wireguard port":
+      table    => 'nat',
+      chain    => 'PREROUTING',
+      dst_type => 'LOCAL',
+      proto    => 'udp',
+      dport    => $port,
+      action   => 'redirect',
+      to_ports => 41194,
     }
   }
 
