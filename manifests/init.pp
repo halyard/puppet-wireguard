@@ -6,7 +6,7 @@
 class wireguard (
   Hash[String, Hash[String, Any]] $networks = {},
   Array[String] $routers = [],
-  Array[String] $alternate_ports = [],
+  Array[Integer] $alternate_ports = [],
 ) {
   package { 'wireguard-tools': }
 
@@ -32,7 +32,7 @@ class wireguard (
     action => 'accept',
   }
 
-  $alternate_ports.each |String $port| {
+  $alternate_ports.each |Integer $port| {
     firewall { "100 redirect ${port} as alternate wireguard port":
       table    => 'nat',
       chain    => 'PREROUTING',
