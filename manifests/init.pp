@@ -39,11 +39,13 @@ class wireguard (
       firewall { "100 masquerade for wireguard routing on ${router}":
         chain  => 'POSTROUTING',
         jump   => 'MASQUERADE',
+        proto  => 'all',
         source => $router,
         table  => 'nat',
       }
       firewall { "100 forward for wireguard routing on ${router}":
         chain  => 'FORWARD',
+        proto  => 'all',
         action => 'accept',
         source => $router,
       }
