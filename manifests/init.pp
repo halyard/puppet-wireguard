@@ -40,7 +40,7 @@ class wireguard (
       proto    => 'udp',
       dport    => $port,
       action   => 'redirect',
-      to_ports => 41194,
+      toports  => 41194,
     }
   }
 
