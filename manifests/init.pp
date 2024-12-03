@@ -45,14 +45,8 @@ class wireguard (
   }
 
   if length($routers) > 0 {
-    file { '/etc/sysctl.d/wireguard.conf':
-      ensure  => file,
-      content => 'net.ipv4.ip_forward=1',
-    }
-
-    ~> service { 'systemd-sysctl':
-      ensure => running,
-      enable => true,
+    sysctl::setting { 'net.ipv4.ip_forward':
+      value => '1',
     }
 
     $routers.each |String $router| {
