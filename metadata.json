@@ -1,16 +1,12 @@
 {
   "name": "halyard-wireguard",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "author": "Les Aker",
   "license": "MIT",
   "summary": "Configure wireguard networks",
   "source": "https://github.com/halyard/puppet-wireguard",
   "project_page": "https://github.com/halyard/puppet-wireguard",
   "issues_url": "https://github.com/halyard/puppet-wireguard/issues",
-  "dependencies": [
-
-  ],
-  "operatingsystem_support": [
-
-  ]
+  "dependencies": [],
+  "operatingsystem_support": []
 }
